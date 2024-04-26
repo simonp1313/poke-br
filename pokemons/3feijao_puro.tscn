@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://ch2ueyi7aa7in"]
+
+[ext_resource type="Texture2D" uid="uid://ck3xp8xl32nla" path="res://sprites_pokemons/feijao_puro_frente.png" id="1_nei1t"]
+[ext_resource type="Script" path="res://scripts/play_iddle.gd" id="1_qmftl"]
+[ext_resource type="Script" path="res://scripts/chegada_cima.gd" id="2_usaa4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lsy4"]
+atlas = ExtResource("1_nei1t")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7ih1"]
+atlas = ExtResource("1_nei1t")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nq83v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lsy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7ih1")
+}],
+"loop": true,
+"name": &"iddle",
+"speed": 3.0
+}]
+
+[sub_resource type="Animation" id="Animation_vuwt4"]
+resource_name = "chegada"
+length = 1.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-23, 23), Vector2(133, 23)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5irf0"]
+_data = {
+"chegada": SubResource("Animation_vuwt4")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyrqt"]
+size = Vector2(18, 24)
+
+[node name="FeijaoPuro" type="CharacterBody2D"]
+position = Vector2(133, 23)
+script = ExtResource("1_qmftl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nq83v")
+animation = &"iddle"
+
+[node name="Chegada" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_5irf0")
+}
+script = ExtResource("2_usaa4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-1, 2)
+shape = SubResource("RectangleShape2D_eyrqt")
+
+[connection signal="animation_finished" from="AnimatedSprite2D/Chegada" to="." method="_on_chegada_animation_finished"]

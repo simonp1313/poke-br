@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bubvfndbnu30l"]
+
+[ext_resource type="Texture2D" uid="uid://cknyoghtn51md" path="res://sprites/grama_alta.png" id="1_s1i6i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ad5gu"]
+size = Vector2(16, 16)
+
+[node name="GramaAlta" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_s1i6i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ad5gu")

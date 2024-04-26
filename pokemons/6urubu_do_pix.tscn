@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://t2iqd7cn0d8u"]
+
+[ext_resource type="Script" path="res://scripts/play_iddle.gd" id="1_3l0tc"]
+[ext_resource type="Texture2D" uid="uid://uyrelu85sepj" path="res://sprites_pokemons/urubu_do_pix_frente.png" id="2_5h63l"]
+[ext_resource type="Script" path="res://scripts/chegada_cima.gd" id="3_5cq2v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t37uk"]
+atlas = ExtResource("2_5h63l")
+region = Rect2(0, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvsbe"]
+atlas = ExtResource("2_5h63l")
+region = Rect2(36, 0, 36, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vs1ai"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t37uk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvsbe")
+}],
+"loop": true,
+"name": &"iddle",
+"speed": 3.0
+}]
+
+[sub_resource type="Animation" id="Animation_q0yyq"]
+resource_name = "chegada"
+length = 1.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-23, 23), Vector2(133, 23)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a7055"]
+_data = {
+"chegada": SubResource("Animation_q0yyq")
+}
+
+[node name="UrubuDoPix" type="CharacterBody2D"]
+position = Vector2(-23, 23)
+script = ExtResource("1_3l0tc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vs1ai")
+animation = &"iddle"
+
+[node name="Chegada" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_a7055")
+}
+script = ExtResource("3_5cq2v")
+
+[connection signal="animation_finished" from="AnimatedSprite2D/Chegada" to="." method="_on_chegada_animation_finished"]

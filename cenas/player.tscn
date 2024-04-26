@@ -1,0 +1,194 @@
+[gd_scene load_steps=23 format=3 uid="uid://bxlnh7hn1fedt"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_4sf1d"]
+[ext_resource type="Texture2D" uid="uid://cv1d4uhkkf6ww" path="res://sprites/anim_direito.png" id="2_21qe3"]
+[ext_resource type="Texture2D" uid="uid://b45ovta16317b" path="res://sprites/anim_esquerdo.png" id="2_jsyg7"]
+[ext_resource type="Texture2D" uid="uid://c4k04a8f8qg10" path="res://sprites/anim_frente.png" id="2_w8fqj"]
+[ext_resource type="Texture2D" uid="uid://bvekj2pa15h3a" path="res://sprites/anim_tras.png" id="4_q3xj3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yvllc"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eslrc"]
+atlas = ExtResource("2_21qe3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uiuvp"]
+atlas = ExtResource("2_21qe3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7omq"]
+atlas = ExtResource("2_jsyg7")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mbqb"]
+atlas = ExtResource("2_jsyg7")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmvor"]
+atlas = ExtResource("2_w8fqj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnsku"]
+atlas = ExtResource("2_w8fqj")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eal5f"]
+atlas = ExtResource("2_w8fqj")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2uko"]
+atlas = ExtResource("2_w8fqj")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ns7w"]
+atlas = ExtResource("4_q3xj3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lr20"]
+atlas = ExtResource("4_q3xj3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tmd0"]
+atlas = ExtResource("4_q3xj3")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhfxm"]
+atlas = ExtResource("4_q3xj3")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uov3p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eslrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uiuvp")
+}],
+"loop": true,
+"name": &"dir",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7omq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mbqb")
+}],
+"loop": true,
+"name": &"esq",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmvor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnsku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eal5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2uko")
+}],
+"loop": true,
+"name": &"frente",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ns7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lr20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tmd0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhfxm")
+}],
+"loop": true,
+"name": &"tras",
+"speed": 8.0
+}]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y7a6m"]
+
+[sub_resource type="Animation" id="Animation_l0h5i"]
+resource_name = "transicao"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cam/Transition/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m40l5"]
+_data = {
+"transicao": SubResource("Animation_l0h5i")
+}
+
+[node name="player" type="CharacterBody2D"]
+texture_filter = 1
+script = ExtResource("1_4sf1d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_yvllc")
+
+[node name="Animacao" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -7)
+sprite_frames = SubResource("SpriteFrames_uov3p")
+animation = &"tras"
+centered = false
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_y7a6m")
+}
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(8, 6)
+target_position = Vector2(0, 16)
+collide_with_areas = true
+
+[node name="Cam" type="Camera2D" parent="."]
+visible = false
+
+[node name="Transition" type="CanvasLayer" parent="Cam"]
+
+[node name="AnimTransition" type="AnimationPlayer" parent="Cam/Transition"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_m40l5")
+}
+
+[node name="ColorRect" type="ColorRect" parent="Cam/Transition"]
+offset_right = 160.0
+offset_bottom = 144.0
+color = Color(0, 0, 0, 0)
+
+[node name="Transition2" type="CanvasLayer" parent="Cam"]
+
+[node name="AnimTransition" type="AnimationPlayer" parent="Cam/Transition2"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_m40l5")
+}
+
+[node name="ColorRect" type="ColorRect" parent="Cam/Transition2"]
+offset_right = 160.0
+offset_bottom = 144.0
+color = Color(0, 0, 0, 0)
+
+[connection signal="animation_finished" from="Cam/Transition/AnimTransition" to="." method="_on_anim_transition_animation_finished"]

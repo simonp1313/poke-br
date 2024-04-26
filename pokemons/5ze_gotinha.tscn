@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://dw7j23nnlst2k"]
+
+[ext_resource type="Texture2D" uid="uid://cx3ru7tc3s7gb" path="res://sprites_pokemons/ze_gotinha_frente.png" id="1_3ket6"]
+[ext_resource type="Script" path="res://scripts/play_iddle.gd" id="1_dxvir"]
+[ext_resource type="Script" path="res://scripts/chegada_cima.gd" id="2_txc1h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wn1gx"]
+atlas = ExtResource("1_3ket6")
+region = Rect2(0, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v6dj"]
+atlas = ExtResource("1_3ket6")
+region = Rect2(36, 0, 36, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4205w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wn1gx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v6dj")
+}],
+"loop": true,
+"name": &"iddle",
+"speed": 3.0
+}]
+
+[sub_resource type="Animation" id="Animation_5n60x"]
+resource_name = "chegada"
+length = 1.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-23, 23), Vector2(133, 23)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6rxhn"]
+_data = {
+"chegada": SubResource("Animation_5n60x")
+}
+
+[node name="ZeGotinha" type="CharacterBody2D"]
+position = Vector2(-70, 70)
+script = ExtResource("1_dxvir")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4205w")
+animation = &"iddle"
+
+[node name="Chegada" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_6rxhn")
+}
+script = ExtResource("2_txc1h")
+
+[connection signal="animation_finished" from="AnimatedSprite2D/Chegada" to="." method="_on_chegada_animation_finished"]
